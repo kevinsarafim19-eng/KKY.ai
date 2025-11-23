@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KKY.ia - Assistente de Desenvolvimento</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .animate-bounce {
+            animation: bounce 1s infinite;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-800 min-h-screen flex items-center justify-center p-4">
+    <div class="w-full max-w-4xl bg-white/10 backdrop-blur-lg rounded-3xl shadow-2xl overflow-hidden border border-white/20">
+        <!-- Header -->
+        <div class="bg-gradient-to-r from-indigo-600 to-purple-600 p-6 text-white">
+            <div class="flex items-center gap-3 mb-2">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
+                </svg>
+                <h1 class="text-3xl font-bold">KKY.ia</h1>
+            </div>
+            <p class="text-indigo-100">Assistente Inteligente de Desenvolvimento Web e Jogos</p>
+            
+            <div class="flex gap-4 mt-4 flex-wrap">
+                <div class="flex items-center gap-2 bg-white/20 rounded-full px-3 py-1 text-sm">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+                    </svg>
+                    <span>Sites</span>
+                </div>
+                <div class="flex items-center gap-2 bg-white/20 rounded-full px-3 py-1 text-sm">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"></path>
+                    </svg>
+                    <span>Personalização</span>
+                </div>
+                <div class="flex items-center gap-2 bg-white/20 rounded-full px-3 py-1 text-sm">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z"></path>
+                    </svg>
+                    <span>Jogos</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chat Area -->
+        <div id="chatArea" class="h-96 overflow-y-auto p-6 space-y-4 bg-white/5">
+            <div class="flex justify-start">
+                <div class="max-w-[80%] rounded-2xl p-4 bg-white/90 text-gray-800">
+                    <p class="text-sm leading-relaxed">Olá! Sou a KKY.ia, sua assistente de desenvolvimento web e jogos. Estou aqui para ajudá-lo a criar sites incríveis, fazer personalizações e desenvolver jogos. Como posso auxiliá-lo hoje?</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Input Area -->
+        <div class="p-4 bg-white/5 border-t border-white/10">
+            <div class="flex gap-2">
+                <input
+                    type="text"
+                    id="userInput"
+                    placeholder="Descreva o que você precisa criar..."
+                    class="flex-1 bg-white/90 text-gray-800 rounded-full px-6 py-3 focus:outline-none focus:ring-2 focus:ring-purple-500 placeholder-gray-500"
+                />
+                <button
+                    id="sendBtn"
+                    class="bg-gradient-to-r from-indigo-500 to-purple-500 text-white rounded-full p-3 hover:from-indigo-600 hover:to-purple-600 transition-all"
+                >
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+                    </svg>
+                </button>
+            </div>
+            <p class="text-white/60 text-xs mt-2 text-center">
+                Digite sua solicitação de desenvolvimento e a KKY.ia criará o código para você
+            </p>
+        </div>
+    </div>
+
+    <script>
+        const chatArea = document.getElementById('chatArea');
+        const userInput = document.getElementById('userInput');
+        const sendBtn = document.getElementById('sendBtn');
+
+        function addMessage(content, isUser) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `flex ${isUser ? 'justify-end' : 'justify-start'}`;
+            
+            const bubble = document.createElement('div');
+            bubble.className = `max-w-[80%] rounded-2xl p-4 ${
+                isUser 
+                ? 'bg-gradient-to-r from-indigo-500 to-purple-500 text-white' 
+                : 'bg-white/90 text-gray-800'
+            }`;
+            
+            const text = document.createElement('p');
+            text.className = 'text-sm leading-relaxed whitespace-pre-wrap';
+            text.textContent = content;
+            
+            bubble.appendChild(text);
+            messageDiv.appendChild(bubble);
+            chatArea.appendChild(messageDiv);
+            chatArea.scrollTop = chatArea.scrollHeight;
+        }
+
+        function showTyping() {
+            const typingDiv = document.createElement('div');
+            typingDiv.id = 'typing';
+            typingDiv.className = 'flex justify-start';
+            typingDiv.innerHTML = `
+                <div class="bg-white/90 text-gray-800 rounded-2xl p-4">
+                    <div class="flex gap-1">
+                        <div class="w-2 h-2 bg-indigo-500 rounded-full animate-bounce"></div>
+                        <div class="w-2 h-2 bg-purple-500 rounded-full animate-bounce" style="animation-delay: 0.1s"></div>
+                        <div class="w-2 h-2 bg-pink-500 rounded-full animate-bounce" style="animation-delay: 0.2s"></div>
+                    </div>
+                </div>
+            `;
+            chatArea.appendChild(typingDiv);
+            chatArea.scrollTop = chatArea.scrollHeight;
+        }
+
+        function removeTyping() {
+            const typing = document.getElementById('typing');
+            if (typing) typing.remove();
+        }
+
+        function generateResponse(message) {
+            const lower = message.toLowerCase();
+            
+            if (lower.includes('site') || lower.includes('página') || lower.includes('website')) {
+                return `Ficaria feliz em ajudá-lo a criar um site! Posso gerar código completo em HTML, CSS e JavaScript. 
+
+Para começar, preciso saber:
+- Qual tipo de site você deseja? (pessoal, portfólio, e-commerce, blog, landing page)
+- Quais cores e estilo prefere?
+- Que funcionalidades seriam importantes?
+
+Assim que me informar, crio o código personalizado para você!`;
+            }
+            
+            if (lower.includes('jogo') || lower.includes('game')) {
+                return `Excelente! Posso criar jogos interativos usando JavaScript e Canvas ou bibliotecas como Phaser.
+
+Que tipo de jogo você tem em mente?
+- Plataforma (estilo Mario)
+- Puzzle
+- Corrida/Arcade
+- RPG simples
+- Outro tipo?
+
+Também posso adicionar pontuação, níveis e controles personalizados. Me conte mais sobre sua ideia!`;
+            }
+            
+            if (lower.includes('personaliz') || lower.includes('customiz') || lower.includes('css')) {
+                return `Perfeito! Sou especializada em personalizações visuais e CSS.
+
+Posso criar para você:
+- Animações e transições suaves
+- Layouts responsivos
+- Temas dark/light
+- Componentes estilizados (botões, cards, menus)
+- Gradientes e efeitos visuais modernos
+
+Qual elemento você gostaria de personalizar? Descreva o visual que imagina!`;
+            }
+            
+            if (lower.includes('ajuda') || lower.includes('como') || lower.includes('o que')) {
+                return `Estou aqui para auxiliar você em diversas áreas de desenvolvimento:
+
+🌐 Criação de Sites: HTML, CSS, JavaScript, layouts responsivos
+🎨 Personalizações: Estilos CSS, animações, temas personalizados
+🎮 Desenvolvimento de Jogos: Jogos em JavaScript, Canvas, lógica de gameplay
+⚙️ Funcionalidades: Formulários, APIs, interatividade
+
+Basta me descrever o que precisa e eu crio o código completo para você. Qual será seu próximo projeto?`;
+            }
+
+            if (lower.includes('exemplo') || lower.includes('mostre')) {
+                return `Com prazer! Aqui vai um exemplo rápido de um botão animado moderno:
+
+CSS:
+.botao-moderno {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 12px 30px;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.botao-moderno:hover {
+  transform: translateY(-2px);
+}
+
+Posso criar exemplos mais complexos! O que gostaria de ver?`;
+            }
+            
+            return `Entendi sua solicitação! Estou pronta para criar o código que você precisa. 
+
+Poderia fornecer mais detalhes sobre:
+- O objetivo específico do projeto
+- Preferências de design ou funcionalidades
+- Alguma referência que tem em mente
+
+Com essas informações, posso desenvolver uma solução completa e personalizada para você!`;
+        }
+
+        function handleSend() {
+            const message = userInput.value.trim();
+            if (!message) return;
+            
+            addMessage(message, true);
+            userInput.value = '';
+            
+            showTyping();
+            
+            setTimeout(() => {
+                removeTyping();
+                const response = generateResponse(message);
+                addMessage(response, false);
+            }, 1000);
+        }
+
+        sendBtn.addEventListener('click', handleSend);
+        userInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') handleSend();
+        });
+    </script>
+</body>
+</html>
